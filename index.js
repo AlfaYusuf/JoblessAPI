@@ -29,7 +29,7 @@ app.post("/postjob",async (req,resp)=>{
 // Route to get all jobs from the JobDetailes collection
 app.get('/getjobs', async (req, resp) => {
     try {
-        let jobs = await Jobdetaile.find();
+        const jobs = await Jobdetaile.find().sort({ postedDate: -1 });
         resp.status(200).send(jobs);
     } catch (error) {
         resp.status(500).send({ error: 'Error fetching jobs from database' });

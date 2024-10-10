@@ -13,6 +13,10 @@ const JobSchema = new mongoose.Schema({
    Location:String,
    RemoteOrOnSite:String,
    jobtype:String,
+   postedDate: {
+      type: Date,
+      default: Date.now,  // Automatically captures the current date when the job is created
+  },
 
 });
 
