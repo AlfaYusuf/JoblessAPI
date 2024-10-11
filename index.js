@@ -21,6 +21,7 @@ app.use(cors())
 // Route to post a job
 app.post("/postjob",async (req,resp)=>{
     debugger
+    console.log('Received job data:', req.body);  // Log the incoming data
     let job= new Jobdetaile(req.body);
     let result = await job.save()
     resp.send(result)
@@ -37,18 +38,18 @@ app.get('/getjobs', async (req, resp) => {
 }); 
 
 // Route to get a specific job by ID (Optional)
-app.get('/getjob/:id', async (req, resp) => {
-    try {
-        let job = await Jobdetaile.findById(req.params.id);
-        if (job) {
-            resp.status(200).send(job);
-        } else {
-            resp.status(404).send({ error: 'Job not found' });
-        }
-    } catch (error) {
-        resp.status(500).send({ error: 'Error fetching job from database' });
-    }
-});
+// app.get('/getjob/:id', async (req, resp) => {
+//     try {
+//         let job = await Jobdetaile.findById(req.params.id);
+//         if (job) {
+//             resp.status(200).send(job);
+//         } else {
+//             resp.status(404).send({ error: 'Job not found' });
+//         }
+//     } catch (error) {
+//         resp.status(500).send({ error: 'Error fetching job from database' });
+//     }
+// });
 
 const port = process.env.PORT || 4000;
 

@@ -7,12 +7,13 @@ const JobSchema = new mongoose.Schema({
    Salary:String,
    Contact:String,
    Email:String,
-   EducationRequirmnet:String,
-   Exprience:String,
+   EducationRequirement:String,
+   Experience:String,
    CompanyName:String,
    Location:String,
-   RemoteOrOnSite:String,
-   jobtype:String,
+   RemoteOrOnsite:String,
+   JobType:String,
+   Link:String,
    postedDate: {
       type: Date,
       default: Date.now,  // Automatically captures the current date when the job is created
