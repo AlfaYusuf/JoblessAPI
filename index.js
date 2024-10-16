@@ -37,19 +37,41 @@ app.get('/getjobs', async (req, resp) => {
     }
 }); 
 
-// Route to get a specific job by ID (Optional)
-// app.get('/getjob/:id', async (req, resp) => {
-//     try {
-//         let job = await Jobdetaile.findById(req.params.id);
-//         if (job) {
-//             resp.status(200).send(job);
-//         } else {
-//             resp.status(404).send({ error: 'Job not found' });
-//         }
-//     } catch (error) {
-//         resp.status(500).send({ error: 'Error fetching job from database' });
-//     }
-// });
+// Update a job by ID
+app.put('/updatejob/:id', async (req, res) => {
+    const jobId = req.params.id;
+    const jobData = req.body; 
+    
+    // Log incoming data
+    console.log('Received job data for update:', jobData);
+    
+    try {
+        const updatedJob = await Jobdetaile.findByIdAndUpdate(jobId, jobData, { new: true });
+        if (!updatedJob) {
+            return res.status(404).json({ message: 'Job not found' });
+        }
+        res.status(200).json(updatedJob);
+    } catch (error) {
+        console.error('Error updating job:', error);
+        res.status(400).json({ message: 'Error updating job' });
+    }
+});
+
+
+// Route to delete a job by its ID
+app.delete('/deletejob/:id', async (req, resp) => {
+    try {
+        const jobId = req.params.id;  // Get job ID from request params
+        const result = await Jobdetaile.findByIdAndDelete(jobId);  // Find and delete job by ID
+        if (result) {
+            resp.status(200).send({ message: 'Job deleted successfully', result });
+        } else {
+            resp.status(404).send({ message: 'Job not found' });
+        }
+    } catch (error) {
+        resp.status(500).send({ message: 'Error deleting job', error });
+    }
+});
 
 const port = process.env.PORT || 4000;
 
